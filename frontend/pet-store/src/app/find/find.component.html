@@ -1,0 +1,50 @@
+<div class="container form-center">
+
+  <mat-form-field class="input_search">
+    <mat-label>Name</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput type="text" [(ngModel)]="searchForm.name">
+    <button mat-button *ngIf="searchForm.name" matSuffix mat-icon-button aria-label="Clear" (click)="searchForm.name=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+</div>
+
+  <mat-select placeholder="Type" style="width: 30%; float: left; margin-top: 30px; margin-left: 20%;" [(ngModel)]="searchForm.type">
+    <mat-option [value]="null">
+
+    </mat-option>
+    <mat-option *ngFor="let type of types" [value]="type">
+      {{type}}
+    </mat-option>
+  </mat-select>
+
+  <mat-select placeholder="Race" style="width: 30%; float: left; margin-top: 30px;" [(ngModel)]="searchForm.race">
+    <mat-option [value]="null">
+
+    </mat-option>
+    <mat-option *ngFor="let race of races" [value]="race">
+      {{getRace(race)}}
+    </mat-option>
+  </mat-select>
+
+  <button mat-raised-button color="primary" style="float: right; margin-right: 10%; margin-top: 20px;" (click)="search()">Search</button>
+
+<div class="container form-center">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel class="panel-expansion" *ngFor="let pet of pets">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{pet.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{pet.type}} | {{getRace(pet.race)}} | {{pet.genre}} | {{pet.age}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>{{pet.description}}</p>
+      <p>{{pet.price}} €</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>
