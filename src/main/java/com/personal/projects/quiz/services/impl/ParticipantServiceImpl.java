@@ -158,6 +158,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         } catch (Exception e) {
             System.err.println("Exception relance de mail: " + e.getMessage());
         }
+        this.participantRepository.save(participant);
         return participant;
     }
 
