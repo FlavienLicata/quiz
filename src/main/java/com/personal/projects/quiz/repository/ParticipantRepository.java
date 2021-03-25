@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface ParticipantRepository extends CrudRepository<Participant, Integer> {
 
     Optional<Participant> findById(Integer id);
-    Participant findByTokenAndQuizId(String token, Integer quizId);
+    Participant findByTokenAndAndParticipationDateIsNull(String token);
     List<Participant> findByQuizId(Integer quizId);
     List<Participant> findByQuizIdAndParticipationDateIsNull(Integer quizId);
 

@@ -6,6 +6,7 @@ import com.personal.projects.quiz.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,17 @@ public class QuestionServiceImpl implements QuestionService {
         Optional<Question> question = null;
         try {
             question = questionRepository.findById(id);
+        } catch (Exception e) {
+            throw e;
+        }
+        return question;
+    }
+
+    @Override
+    public List<Question> findByQuizId(Integer id) {
+        List<Question> question = null;
+        try {
+            question = questionRepository.findByQuizId(id);
         } catch (Exception e) {
             throw e;
         }

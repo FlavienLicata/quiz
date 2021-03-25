@@ -5,6 +5,7 @@ import com.personal.projects.quiz.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -18,6 +19,11 @@ public class QuestionController {
     @GetMapping(value="/{id}")
     public Optional<Question> getQuestion(@PathVariable Integer id) {
         return questionService.findById(id);
+    }
+
+    @GetMapping(value="/quiz/{id}")
+    public List<Question> getQuestionsQuiz(@PathVariable Integer id) {
+        return questionService.findByQuizId(id);
     }
 
     @GetMapping(value="/count/quiz/{id}")

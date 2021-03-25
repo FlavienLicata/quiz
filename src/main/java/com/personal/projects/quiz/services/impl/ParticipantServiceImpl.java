@@ -41,10 +41,10 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public Participant findByTokenAndQuizId(String token, Integer quizId) {
+    public Participant findByTokenAndAndParticipationDateIsNull(String token) {
         Participant participant = null;
         try {
-            participant = participantRepository.findByTokenAndQuizId(token, quizId);
+            participant = participantRepository.findByTokenAndAndParticipationDateIsNull(token);
         } catch (Exception e) {
             throw e;
         }
@@ -136,6 +136,14 @@ public class ParticipantServiceImpl implements ParticipantService {
         } catch (Exception e) {
             participantRepository.delete(participant);
         }
+        return participant;
+    }
+
+    @Override
+    public Participant saveParticipation(Participant participant) {
+        Date currentDate = new Date();
+        participant.setParticipationDate(LocalDate.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDay()));
+        participantRepository.save(participant);
         return participant;
     }
 

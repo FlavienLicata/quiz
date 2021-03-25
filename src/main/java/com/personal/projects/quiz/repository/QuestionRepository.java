@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface QuestionRepository extends CrudRepository<Question, Integer> {
 
     Optional<Question> findById(Integer id);
+    List<Question> findByQuizId(Integer id);
     Integer countAllByQuizId(Integer quizId);
 }

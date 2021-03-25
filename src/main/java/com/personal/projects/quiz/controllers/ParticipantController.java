@@ -36,6 +36,11 @@ public class ParticipantController {
         return participantService.save(participant);
     }
 
+    @PostMapping(value="/quiz/{id}/save-participation")
+    public Participant saveParticipation(@RequestBody Participant participant) {
+        return participantService.saveParticipation(participant);
+    }
+
     @PostMapping(value="/quiz/{id}/resend-invitation")
     public Participant reSendInvitation(@RequestBody Participant participant) {
         return participantService.resendInvitation(participant);
@@ -46,9 +51,9 @@ public class ParticipantController {
         return participantService.findByQuizIdAndParticipationDateIsNull(id);
     }
 
-    @GetMapping(value="/quiz/{id}/token/{token}")
-    public Participant getParticipantByTokenAndQuizId(@PathVariable Integer id, @PathVariable String token) {
-        return participantService.findByTokenAndQuizId(token, id);
+    @GetMapping(value="/token/{token}")
+    public Participant getParticipantByTokenAndQuizId(@PathVariable String token) {
+        return participantService.findByTokenAndAndParticipationDateIsNull(token);
     }
 
     @GetMapping(value="/quiz/{id}/response/history")

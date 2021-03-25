@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface ParticipantService {
 
     Optional<Participant> findById(Integer id);
-    Participant findByTokenAndQuizId(String token, Integer quizId);
+    Participant findByTokenAndAndParticipationDateIsNull(String token);
     List<Participant> findByQuizId(Integer quizId);
     List<Participant> findByQuizIdAndParticipationDateIsNull(Integer quizId);
     List<?> findParticipationDateCount(Integer quizId);
@@ -18,6 +18,7 @@ public interface ParticipantService {
     Double averageCompletionByQuizId(Integer quizId);
     Double averageSuccessByQuizId(Integer quizId);
     Participant save(Participant participant);
+    Participant saveParticipation(Participant participant);
     Participant resendInvitation(Participant participant);
     Integer delete(Integer participantId);
 }
