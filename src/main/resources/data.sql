@@ -12,4 +12,4 @@ INSERT INTO ANSWER (quiz_id, question_id, title, correct) VALUES (1, 2, 'Les 5 d
 INSERT INTO ANSWER (quiz_id, question_id, title, correct) VALUES (1, 2, 'Les 5 premiers sports olympiques', false);
 INSERT INTO ANSWER (quiz_id, question_id, title, correct) VALUES (1, 2, 'Les 5 fondateurs des Jeux Olympiques', false);
 INSERT INTO PARTICIPANT_ANSWER (quiz_id, participant_id, question_id, answer_id, correct) VALUES (1, 1, 1, null, false);
-INSERT INTO PARTICIPANT_ANSWER (quiz_id, participant_id, question_id, answer_id, correct) VALUES (1, 1, 2, 1, true);
+INSERT INTO PARTICIPANT_ANSWER (quiz_id, participant_id, question_id, answer_id, correct) VALUES (1, 1, 2, 5, true);

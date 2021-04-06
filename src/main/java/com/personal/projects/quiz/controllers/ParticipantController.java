@@ -5,6 +5,7 @@ import com.personal.projects.quiz.services.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +29,12 @@ public class ParticipantController {
 
     @GetMapping(value="/quiz/{id}")
     public List<Participant> getParticipantsByQuizId(@PathVariable Integer id) {
-        return participantService.findByQuizId(id);
+        return participantService.findByQuizIdAndParticipationDateIsNotNull(id);
     }
 
     @PostMapping(value="/quiz/{id}")
-    public Participant inviteParticipantsByQuizId(@RequestBody Participant participant) {
-        return participantService.save(participant);
+    public Participant inviteParticipantsByQuizId(@RequestBody Participant participant, HttpServletRequest request) {
+        return participantService.save(participant, request);
     }
 
     @PostMapping(value="/quiz/{id}/save-participation")

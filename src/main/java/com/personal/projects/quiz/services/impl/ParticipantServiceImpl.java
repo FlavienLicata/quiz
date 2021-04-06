@@ -9,10 +9,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,10 +52,10 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public List<Participant> findByQuizId(Integer quizId) {
+    public List<Participant> findByQuizIdAndParticipationDateIsNotNull(Integer quizId) {
         List<Participant> participants = null;
         try {
-            participants = participantRepository.findByQuizId(quizId);
+            participants = participantRepository.findByQuizIdAndParticipationDateIsNotNull(quizId);
         } catch (Exception e) {
             throw e;
         }
@@ -118,18 +118,21 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public Participant save(Participant participant) {
-        Date currentDate = new Date();
-        participant.setInvitationDate(LocalDate.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDay())).setToken(generateNewToken());
+    public Participant save(Participant participant, HttpServletRequest request) {
+        participant.setInvitationDate(LocalDate.now()).setToken(generateNewToken());
         participantRepository.save(participant);
+
+        final String urlParticipation = request.getHeader("host") + "/start-quiz/" + participant.getToken();
+//        final String urlParticipation =  "/app/start-quiz/" + participant.getToken();
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);
         msg.setTo(participant.getEmail());
 
+
         msg.setSubject("Invitation au Quiz");
         msg.setText("Vous avez été invité à participer au Quiz sur Les Jeux Olympiques \n" +
-                "Veuillez y participer en cliquant sur le lien suivant : " + participant.getToken());
+                "Veuillez y participer en cliquant sur le lien suivant : <a href=\""+urlParticipation+"\">"+urlParticipation+"</a>");
 
         try {
             javaMailSender.send(msg);
@@ -141,16 +144,14 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public Participant saveParticipation(Participant participant) {
-        Date currentDate = new Date();
-        participant.setParticipationDate(LocalDate.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDay()));
+        participant.setParticipationDate(LocalDate.now());
         participantRepository.save(participant);
         return participant;
     }
 
     @Override
     public Participant resendInvitation(Participant participant) {
-        Date currentDate = new Date();
-        participant.setRelanceDate(LocalDate.of(currentDate.getYear(), currentDate.getMonth(), currentDate.getDay()));
+        participant.setRelanceDate(LocalDate.now());
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(from);

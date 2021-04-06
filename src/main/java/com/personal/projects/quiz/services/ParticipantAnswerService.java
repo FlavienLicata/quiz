@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ParticipantAnswerService {
 
     ParticipantAnswer save(ParticipantAnswer participantAnswer);
+    List<ParticipantAnswer> findByQuizIdAndParticipantId(Integer quizId, Integer participantId);
 }

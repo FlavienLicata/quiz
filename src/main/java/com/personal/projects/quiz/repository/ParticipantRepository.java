@@ -16,7 +16,7 @@ public interface ParticipantRepository extends CrudRepository<Participant, Integ
 
     Optional<Participant> findById(Integer id);
     Participant findByTokenAndAndParticipationDateIsNull(String token);
-    List<Participant> findByQuizId(Integer quizId);
+    List<Participant> findByQuizIdAndParticipationDateIsNotNull(Integer quizId);
     List<Participant> findByQuizIdAndParticipationDateIsNull(Integer quizId);
 
     @Query("SELECT p.participationDate, count(p) FROM Participant p WHERE p.quizId = :quizId AND p.participationDate IS NOT NULL GROUP BY p.participationDate ORDER BY p.participationDate")
