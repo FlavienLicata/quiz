@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Ignore
 @SpringBootTest
-class PetStoreApplicationTests {
+class QuizOnlineApplicationTests {
 
 	@Test
 	void contextLoads() {
