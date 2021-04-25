@@ -1,0 +1,8 @@
+.card {
+  max-width: 350px;
+}
+
+.header-image {
+  background-image: url('https://i.pinimg.com/originals/75/3c/3f/753c3f1a9f85871ffa7a7a78bcf49f66.png');
+  background-size: cover;
+}

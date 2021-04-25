@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Attention</h1>
+<div mat-dialog-content>
+  <p> Etes vous sûr de vouloir supprimer l'invitation de {{data.email}} ? </p>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="delete()">Supprimer</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>Annuler</button>
+</mat-dialog-actions>

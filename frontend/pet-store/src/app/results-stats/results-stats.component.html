@@ -1,0 +1,105 @@
+<mat-grid-list cols = "4" rowHeight = "100px">
+  <mat-grid-tile
+    [colspan] = "1"
+    [rowspan] = "4">
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="header-image"></div>
+        <mat-card-title>{{quiz.name}}</mat-card-title>
+        <mat-card-subtitle>Créé le {{quiz.creationDate}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon>help</mat-icon>
+            {{ nbQuestion }} questions
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon>question_answer</mat-icon>
+            {{ nbReponses }} réponses
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon>timer</mat-icon>
+            Temps de réponse moyen : {{ averageTimeMinutes }}min et {{averageTimeSeconds}} sec
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon [inline]="true" matSuffix>%</mat-icon>
+            Taux de complétion moyen : {{ averageCompletion | number : '0.2' }}%
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon [inline]="true" matSuffix>%</mat-icon>
+            Taux de succès moyen : {{ averageSuccess | number : '0.2' }}%
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile
+    [colspan] = "3"
+    [rowspan] = "4">
+    <horizontal-bar-chart *ngIf="chartLabels.length > 0"
+                          [chartDatasets]="chartDatasets"
+                          [chartLabels]="chartLabels">
+    </horizontal-bar-chart>
+  </mat-grid-tile>
+  <mat-grid-tile
+    class="mat-tile-custom"
+    [colspan] = "4"
+    [rowspan] = "4">
+    <div class="mat-elevation-z8">
+
+      <div class="fields-container">
+        <mat-form-field>
+          <mat-label>Search</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher un nom / email">
+        </mat-form-field>
+      </div>
+
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nom </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="participationDate">
+          <th mat-header-cell *matHeaderCellDef> Date de participation </th>
+          <td mat-cell *matCellDef="let element"> {{element.participationDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef> Temps </th>
+          <td mat-cell *matCellDef="let element"> {{ element.timer }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="score">
+          <th mat-header-cell *matHeaderCellDef> Score </th>
+          <td mat-cell *matCellDef="let element"> {{ score[element.id] }} / {{ questions.length }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="detailsResults(element)">
+              <mat-icon>remove_red_eye</mat-icon>
+              Voir en détails
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator [hidden]="participants.length === 0" [pageSizeOptions]="[1, 5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-grid-tile>
+</mat-grid-list>

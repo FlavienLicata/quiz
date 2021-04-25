@@ -1,0 +1,29 @@
+<mat-card class="card" *ngFor="let element of quiz">
+  <mat-card-header>
+    <div mat-card-avatar class="header-image"></div>
+    <mat-card-title>{{element.name}}</mat-card-title>
+    <mat-card-subtitle>Créé le {{element.creationDate}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Olympic_rings_without_rims.svg/1200px-Olympic_rings_without_rims.svg.png" alt="Logo JO">
+  <mat-card-content></mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>share</mat-icon>
+      Actions
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="inviteParticipant(element)">
+        <mat-icon>group_add</mat-icon>
+        <span>Inviter un participant</span>
+      </button>
+      <button mat-menu-item [routerLink]="'/app/quiz/' + element.id + '/pending-invitations'">
+        <mat-icon>pending</mat-icon>
+        <span>Invitations en attente</span>
+      </button>
+      <button mat-menu-item [routerLink]="'/app/quiz/' + element.id + '/statistics'">
+        <mat-icon>bar_chart</mat-icon>
+        <span>Résultats / Statistiques</span>
+      </button>
+    </mat-menu>
+  </mat-card-actions>
+</mat-card>
