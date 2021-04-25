@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router,NavigationEnd  } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'pet-store';
+  title = 'quiz-online';
+  displayMenu = true;
+
+  constructor(private router: Router) {
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.displayMenu = !event.url.indexOf('/app/start-quiz/');
+      }
+    });
+  }
 }
